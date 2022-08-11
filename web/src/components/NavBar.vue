@@ -1,17 +1,17 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#"> King of Bots</a>
+      <a class="navbar-brand" href="/"> King of Bots</a>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Battle</a>
+            <a class="nav-link active" aria-current="page" href="/battle/">Battle</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Game Record</a>
+            <a class="nav-link" href="/record/">Game Record</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Ranking</a>
+            <a class="nav-link" href="/ranking/">Ranking</a>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -20,7 +20,7 @@
             User
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">My bots</a></li>
+            <li><a class="dropdown-item" href="/user/bot/">My bots</a></li>
             <li><a class="dropdown-item" href="#">Logout</a></li>
           </ul>
         </li>
