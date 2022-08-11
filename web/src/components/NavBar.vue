@@ -1,17 +1,17 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/"> King of Bots</a>
+      <router-link class="navbar-brand" :to="{name: 'home'}"> King of Bots</router-link>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/battle/">Battle</a>
+            <router-link class="nav-link active" aria-current="page" :to="{name: 'battle_index'}">Battle</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/record/">Game Record</a>
+            <router-link class="nav-link" :to="{name: 'record_index'}">Game Record</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/ranking/">Ranking</a>
+            <router-link class="nav-link" :to="{name: 'ranking_index'}">Ranking</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -20,7 +20,7 @@
             User
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="/user/bot/">My bots</a></li>
+            <li><router-link class="dropdown-item" :to="{name: 'user_bot_index'}">My bots</router-link></li>
             <li><a class="dropdown-item" href="#">Logout</a></li>
           </ul>
         </li>
