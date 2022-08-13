@@ -1,4 +1,5 @@
 # king-of-bots
-Web: Vue3
-Backend: SpingBoot
-Database: MySQL
+Tech stack used: <br>
+Web: Vue3 <br>
+Backend: SpingBoot <br>
+Database: MySQL <br>
