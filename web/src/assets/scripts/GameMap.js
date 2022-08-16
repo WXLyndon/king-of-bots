@@ -1,5 +1,6 @@
 import { GameObject } from "./GameObject";
 import { Wall } from "./Wall";
+import { Snake } from "./Snake";
 
 export class GameMap extends GameObject {
   constructor(ctx, parent) {
@@ -10,10 +11,15 @@ export class GameMap extends GameObject {
     this.unit = 0; // unit length
 
     this.rows = 13;
-    this.cols = 13;
+    this.cols = 14;
 
     this.walls = [];
     this.inner_walls_count = 20;
+
+    this.sankes = [
+      new Snake({ id: 0, color: "#4876EC", r: this.rows - 2, c: 1 }, this),
+      new Snake({ id: 1, color: "#F94848", r: 1, c: this.cols - 2 }, this),
+    ];
   }
 
   // Using flood fill method to check_connectivity
@@ -65,7 +71,10 @@ export class GameMap extends GameObject {
         let r = parseInt(Math.random() * this.rows);
         let c = parseInt(Math.random() * this.cols);
 
-        if (has_walls[r][c] || has_walls[c][r]) {
+        if (
+          has_walls[r][c] ||
+          has_walls[this.rows - 1 - r][this.cols - 1 - c]
+        ) {
           continue;
         }
 
@@ -73,7 +82,9 @@ export class GameMap extends GameObject {
           continue;
         }
 
-        has_walls[r][c] = has_walls[c][r] = true;
+        has_walls[r][c] = has_walls[this.rows - 1 - r][
+          this.cols - 1 - c
+        ] = true;
         break;
       }
     }
