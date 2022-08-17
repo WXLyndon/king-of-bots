@@ -181,6 +181,30 @@ export class GameMap extends GameObject {
     }
   }
 
+  // Check if ther target cell is valid: no collision with snakes' bodies or the walls.
+  check_valid(cell) {
+    for (const wall of this.walls) {
+      if (wall.r === cell.r && wall.c === cell.c) {
+        return false;
+      }
+    }
+
+    for (const snake of this.snakes) {
+      let k = snake.cells.length;
+      // If the tail is moving, no need to check the collision with this tail
+      if (!snake.check_tail_increasing()) {
+        k--;
+      }
+
+      for (let i = 0; i < k; i++) {
+        if (snake.cells[i].r === cell.r && snake.cells[i].c === cell.c) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   update() {
     this.update_size();
 
