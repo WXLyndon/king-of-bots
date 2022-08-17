@@ -31,6 +31,20 @@ export class Snake extends GameObject {
     this.direction = direction;
   }
 
+  // Check if the tails of the snakes are increasing in the current turn.
+  check_tail_increasing() {
+    if (this.steps <= 10) {
+      return true;
+    }
+
+    // After the 10th turn, the tail will be increasing for each 3 turns.
+    if (this.steps % 3 === 1) {
+      return true;
+    }
+
+    return false;
+  }
+
   // Update the status of the snake for the next step
   next_step() {
     const direction = this.direction;
@@ -41,7 +55,7 @@ export class Snake extends GameObject {
 
     this.direction = -1; // Clear the direction
     this.status = "move";
-    this.step++;
+    this.steps++;
 
     const k = this.cells.length;
     for (let i = k; i > 0; i--) {
@@ -55,13 +69,29 @@ export class Snake extends GameObject {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < this.eps) {
+      // Aready move to the target position
       this.cells[0] = this.next_cell; // Make the next cell as the new head of the snake.
       this.next_cell = null;
       this.status = "idle";
+
+      // THe length of the snake is not increasing
+      if (!this.check_tail_increasing()) {
+        this.cells.pop();
+      }
     } else {
       const move_distance = (this.speed * this.timeDelta) / 1000;
       this.cells[0].x += (move_distance * dx) / distance;
       this.cells[0].y += (move_distance * dy) / distance;
+
+      if (!this.check_tail_increasing()) {
+        const k = this.cells.length;
+        const tail = this.cells[k - 1],
+          tail_target = this.cells[k - 2];
+        const tail_dx = tail_target.x - tail.x;
+        const tail_dy = tail_target.y - tail.y;
+        tail.x += (move_distance * tail_dx) / distance;
+        tail.y += (move_distance * tail_dy) / distance;
+      }
     }
   }
 
