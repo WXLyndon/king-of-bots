@@ -111,8 +111,32 @@ export class Snake extends GameObject {
     ctx.fillStyle = this.color;
     for (const cell of this.cells) {
       ctx.beginPath();
-      ctx.arc(cell.x * unit, cell.y * unit, unit / 2, 0, Math.PI * 2);
+      ctx.arc(cell.x * unit, cell.y * unit, (unit / 2) * 0.8, 0, Math.PI * 2);
       ctx.fill();
+    }
+
+    for (let i = 1; i < this.cells.length; i++) {
+      const a = this.cells[i - 1],
+        b = this.cells[i];
+
+      if (Math.abs(a.x - b.x) < this.eps && Math.abs(a.y - b.y) < this.eps) {
+        continue;
+      }
+      if (Math.abs(a.x - b.x) < this.eps) {
+        ctx.fillRect(
+          (a.x - 0.4) * unit,
+          Math.min(a.y, b.y) * unit,
+          unit * 0.8,
+          Math.abs(a.y - b.y) * unit
+        );
+      } else {
+        ctx.fillRect(
+          Math.min(a.x, b.x) * unit,
+          (a.y - 0.4) * unit,
+          Math.abs(a.x - b.x) * unit,
+          unit * 0.8
+        );
+      }
     }
   }
 }
