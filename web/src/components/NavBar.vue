@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
     <div class="container">
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         King of Bots</router-link

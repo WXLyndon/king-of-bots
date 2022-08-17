@@ -16,7 +16,7 @@ export class GameMap extends GameObject {
     this.walls = [];
     this.inner_walls_count = 20;
 
-    this.sankes = [
+    this.snakes = [
       new Snake({ id: 0, color: "#4876EC", r: this.rows - 2, c: 1 }, this),
       new Snake({ id: 1, color: "#F94848", r: 1, c: this.cols - 2 }, this),
     ];
@@ -115,12 +115,39 @@ export class GameMap extends GameObject {
     return true;
   }
 
+  add_listening_events() {
+    this.ctx.canvas.focus();
+
+    const [snake0, snake1] = this.snakes;
+    this.ctx.canvas.addEventListener("keydown", (e) => {
+      if (e.key === "w") {
+        snake0.set_direction(0);
+      } else if (e.key === "d") {
+        snake0.set_direction(1);
+      } else if (e.key === "s") {
+        snake0.set_direction(2);
+      } else if (e.key === "a") {
+        snake0.set_direction(3);
+      } else if (e.key === "ArrowUp") {
+        snake1.set_direction(0);
+      } else if (e.key === "ArrowRight") {
+        snake1.set_direction(1);
+      } else if (e.key === "ArrowDown") {
+        snake1.set_direction(2);
+      } else if (e.key === "ArrowLeft") {
+        snake1.set_direction(3);
+      }
+    });
+  }
+
   start() {
     for (let i = 0; i < 1000; i++) {
       if (this.create_walls()) {
         break;
       }
     }
+
+    this.add_listening_events();
   }
 
   update_size() {
@@ -135,8 +162,32 @@ export class GameMap extends GameObject {
     this.ctx.canvas.height = this.unit * this.rows;
   }
 
+  // Referee method to check if both snakes are ready for the next turn.
+  check_ready() {
+    for (const snake of this.snakes) {
+      if (snake.status !== "idle") {
+        return false;
+      }
+      if (snake.direction === -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  next_step() {
+    for (const snake of this.snakes) {
+      snake.next_step();
+    }
+  }
+
   update() {
     this.update_size();
+
+    if (this.check_ready()) {
+      this.next_step();
+    }
+
     this.render();
   }
 
