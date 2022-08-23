@@ -57,7 +57,6 @@ export default {
           store.dispatch("getInfo", {
             success() {
               router.push({ name: "home" });
-              console.log(store.state.user);
             },
           });
         },
