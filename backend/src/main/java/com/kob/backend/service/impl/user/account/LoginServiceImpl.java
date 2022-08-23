@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public Map<String, String> login(String username, String password) {
+    public Map<String, String> getToken(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
