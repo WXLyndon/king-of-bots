@@ -84,8 +84,31 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let has_valid_token = true;
+  const jwt_token = localStorage.getItem("jwt_token");
+
+  if (jwt_token) {
+    store.commit("updateToken", jwt_token);
+    store.dispatch("getInfo", {
+      success() {},
+      error() {
+        alert("Login expired, please login again.");
+        // localStorage.removeItem("jwt_token");
+        store.dispatch("logout");
+        router.push({ name: "user_account_login" });
+      },
+    });
+  } else {
+    has_valid_token = false;
+  }
+
   if (to.meta.requestAuth && !store.state.user.is_login) {
-    next({ name: "user_account_login" });
+    if (has_valid_token === true) {
+      next();
+    } else {
+      alert("Please login first to continue.");
+      next({ name: "user_account_login" });
+    }
   } else {
     next();
   }
