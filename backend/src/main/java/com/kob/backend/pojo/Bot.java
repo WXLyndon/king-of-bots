@@ -25,7 +25,4 @@ public class Bot {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
-
-
-
 }
