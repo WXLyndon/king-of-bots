@@ -34,7 +34,7 @@ public class RemoveServiceImpl implements RemoveService {
         Map<String, String> map = new HashMap<>();
 
         if (bot == null) {
-            map.put("error_message", "Bot not exists.");
+            map.put("error_message", "Bot does not exist.");
             return map;
         }
 
