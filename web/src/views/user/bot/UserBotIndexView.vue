@@ -46,7 +46,13 @@
                     >
                       Edit
                     </button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="remove_bot(bot)"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -190,10 +196,29 @@ export default {
       });
     };
 
+    const remove_bot = (bot) => {
+      $.ajax({
+        url: "http://127.0.0.1:3000/user/bot/remove/",
+        type: "POST",
+        headers: {
+          Authorization: "Bearer " + store.state.user.token,
+        },
+        data: {
+          bot_id: bot.id,
+        },
+        success: (resp) => {
+          if (resp.error_message == "success") {
+            refresh_bots();
+          }
+        },
+      });
+    };
+
     return {
       bots,
       new_bot,
       add_bot,
+      remove_bot,
     };
   },
 };
