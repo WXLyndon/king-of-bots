@@ -20,7 +20,83 @@
             >
               Create New Bot
             </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="add-bot-btn" tabindex="-1">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="CreateNewBotModalLabel">
+                      Create New Bot
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="add-bot-nickname" class="form-label"
+                        >Nickname</label
+                      >
+                      <input
+                        v-model="new_bot.nickname"
+                        type="text"
+                        class="form-control"
+                        id="add-bot-nickname"
+                        placeholder="Please enter this bot's nickname."
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="add-bot-description" class="form-label"
+                        >Description</label
+                      >
+                      <textarea
+                        v-model="new_bot.description"
+                        class="form-control"
+                        id="add-bot-description"
+                        rows="3"
+                        placeholder="Please enter this bot's description."
+                      ></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="add-bot-code" class="form-label">Code</label>
+                      <textarea
+                        v-model="new_bot.code"
+                        class="form-control"
+                        id="add-bot-code"
+                        rows="7"
+                        placeholder="Please enter this bot's code."
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="error-message" id="error-message">
+                      {{ new_bot.error_message }}
+                    </div>
+
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="add_bot"
+                    >
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="card-body">
             <table class="table table-hover">
               <thead>
@@ -43,9 +119,95 @@
                       type="button"
                       class="btn btn-secondary"
                       style="margin-right: 5px"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#update-bot-modal-' + bot.id"
                     >
                       Edit
                     </button>
+
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      :id="'update-bot-modal-' + bot.id"
+                      tabindex="-1"
+                    >
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="CreateNewBotModalLabel">
+                              Update Bot: {{ bot.nickname }}
+                            </h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="add-bot-nickname" class="form-label"
+                                >Nickname</label
+                              >
+                              <input
+                                v-model="bot.nickname"
+                                type="text"
+                                class="form-control"
+                                id="add-bot-nickname"
+                                placeholder="Please enter this bot's nickname."
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label
+                                for="add-bot-description"
+                                class="form-label"
+                                >Description</label
+                              >
+                              <textarea
+                                v-model="bot.description"
+                                class="form-control"
+                                id="add-bot-description"
+                                rows="3"
+                                placeholder="Please enter this bot's description."
+                              ></textarea>
+                            </div>
+                            <div class="mb-3">
+                              <label for="add-bot-code" class="form-label"
+                                >Code</label
+                              >
+                              <textarea
+                                v-model="bot.code"
+                                class="form-control"
+                                id="add-bot-code"
+                                rows="7"
+                                placeholder="Please enter this bot's code."
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <div class="error-message" id="error-message">
+                              {{ bot.error_message }}
+                            </div>
+
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              @click="update_bot(bot)"
+                            >
+                              Save Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <button
                       type="button"
                       class="btn btn-danger"
@@ -58,75 +220,6 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="add-bot-btn" tabindex="-1">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="CreateNewBotModalLabel">
-            Create New Bot
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="add-bot-nickname" class="form-label">Nickname</label>
-            <input
-              v-model="new_bot.nickname"
-              type="text"
-              class="form-control"
-              id="add-bot-nickname"
-              placeholder="Please enter this bot's nickname."
-            />
-          </div>
-          <div class="mb-3">
-            <label for="add-bot-description" class="form-label"
-              >Description</label
-            >
-            <textarea
-              v-model="new_bot.description"
-              class="form-control"
-              id="add-bot-description"
-              rows="3"
-              placeholder="Please enter this bot's description."
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="add-bot-code" class="form-label">Code</label>
-            <textarea
-              v-model="new_bot.code"
-              class="form-control"
-              id="add-bot-code"
-              rows="7"
-              placeholder="Please enter this bot's code."
-            ></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="error-message" id="error-message">
-            {{ new_bot.error_message }}
-          </div>
-
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" @click="add_bot">
-            Create
-          </button>
         </div>
       </div>
     </div>
@@ -196,6 +289,34 @@ export default {
       });
     };
 
+    const update_bot = (bot) => {
+      new_bot.error_message = "";
+      $.ajax({
+        url: "http://127.0.0.1:3000/user/bot/update/",
+        type: "POST",
+        headers: {
+          Authorization: "Bearer " + store.state.user.token,
+        },
+        data: {
+          bot_id: bot.id,
+          nickname: bot.nickname,
+          description: bot.description,
+          code: bot.code,
+        },
+        success: (resp) => {
+          if (resp.error_message === "success") {
+            Modal.getInstance("#update-bot-modal-" + bot.id).hide();
+            refresh_bots();
+          } else {
+            bot.error_message = resp.error_message;
+          }
+        },
+        error: (err) => {
+          bot.error_message = err.error_message;
+        },
+      });
+    };
+
     const remove_bot = (bot) => {
       $.ajax({
         url: "http://127.0.0.1:3000/user/bot/remove/",
@@ -218,6 +339,7 @@ export default {
       bots,
       new_bot,
       add_bot,
+      update_bot,
       remove_bot,
     };
   },
