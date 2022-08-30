@@ -66,9 +66,15 @@
                       <VAceEditor
                         v-model:value="new_bot.code"
                         @init="editorInit"
-                        lang="java"
+                        lang="python"
                         theme="textmate"
                         style="height: 300px"
+                        :options="{
+                          fontSize: 25,
+                          enableLiveAutocompletion: true,
+                          enableBasicAutocompletion: true,
+                          enableSnippets: true,
+                        }"
                       />
                     </div>
                   </div>
