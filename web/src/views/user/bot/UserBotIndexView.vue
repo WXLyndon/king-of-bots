@@ -63,13 +63,13 @@
                     </div>
                     <div class="mb-3">
                       <label for="add-bot-code" class="form-label">Code</label>
-                      <textarea
-                        v-model="new_bot.code"
-                        class="form-control"
-                        id="add-bot-code"
-                        rows="7"
-                        placeholder="Please enter this bot's code."
-                      ></textarea>
+                      <VAceEditor
+                        v-model:value="new_bot.code"
+                        @init="editorInit"
+                        lang="java"
+                        theme="textmate"
+                        style="height: 300px"
+                      />
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -175,13 +175,19 @@
                               <label for="add-bot-code" class="form-label"
                                 >Code</label
                               >
-                              <textarea
-                                v-model="bot.code"
-                                class="form-control"
-                                id="add-bot-code"
-                                rows="7"
-                                placeholder="Please enter this bot's code."
-                              ></textarea>
+                              <VAceEditor
+                                v-model:value="bot.code"
+                                @init="editorInit"
+                                lang="java"
+                                theme="textmate"
+                                style="height: 300px"
+                                :options="{
+                                  fontSize: 25,
+                                  enableLiveAutocompletion: true,
+                                  enableBasicAutocompletion: true,
+                                  enableSnippets: true,
+                                }"
+                              />
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -231,11 +237,24 @@ import { ref, reactive } from "vue";
 import $ from "jquery";
 import { useStore } from "vuex";
 import { Modal } from "bootstrap/dist/js/bootstrap.js";
+import { VAceEditor } from "vue3-ace-editor";
+import ace from "ace-builds";
 
 export default {
+  components: {
+    VAceEditor,
+  },
+
   setup() {
     const store = useStore();
     let bots = ref([]);
+
+    ace.config.set(
+      "basePath",
+      "https://cdn.jsdelivr.net/npm/ace-builds@" +
+        require("ace-builds").version +
+        "/src-noconflict/"
+    );
 
     const new_bot = reactive({
       nickname: "",
