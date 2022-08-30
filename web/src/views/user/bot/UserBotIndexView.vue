@@ -134,7 +134,7 @@
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="CreateNewBotModalLabel">
+                            <h5 class="modal-title" id="UpdateNewBotModalLabel">
                               Update Bot: {{ bot.nickname }}
                             </h5>
                             <button
@@ -146,33 +146,35 @@
                           </div>
                           <div class="modal-body">
                             <div class="mb-3">
-                              <label for="add-bot-nickname" class="form-label"
+                              <label
+                                for="update-bot-nickname"
+                                class="form-label"
                                 >Nickname</label
                               >
                               <input
                                 v-model="bot.nickname"
                                 type="text"
                                 class="form-control"
-                                id="add-bot-nickname"
+                                id="update-bot-nickname"
                                 placeholder="Please enter this bot's nickname."
                               />
                             </div>
                             <div class="mb-3">
                               <label
-                                for="add-bot-description"
+                                for="update-bot-description"
                                 class="form-label"
                                 >Description</label
                               >
                               <textarea
                                 v-model="bot.description"
                                 class="form-control"
-                                id="add-bot-description"
+                                id="update-bot-description"
                                 rows="3"
                                 placeholder="Please enter this bot's description."
                               ></textarea>
                             </div>
                             <div class="mb-3">
-                              <label for="add-bot-code" class="form-label"
+                              <label for="update-bot-code" class="form-label"
                                 >Code</label
                               >
                               <VAceEditor
@@ -199,6 +201,7 @@
                               type="button"
                               class="btn btn-secondary"
                               data-bs-dismiss="modal"
+                              @click="refresh_bots"
                             >
                               Close
                             </button>
@@ -360,6 +363,7 @@ export default {
       add_bot,
       update_bot,
       remove_bot,
+      refresh_bots,
     };
   },
 };
