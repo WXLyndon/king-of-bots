@@ -32,16 +32,28 @@
   
 <script>
 import { ref } from "vue";
+import { useStore } from "vuex";
 
 export default {
   setup() {
+    const store = useStore();
     let match_btn_info = ref("Start Matching");
 
     const click_match_btn = () => {
       if (match_btn_info.value === "Start Matching") {
         match_btn_info.value = "Cancel";
+        store.state.battle.socket.send(
+          JSON.stringify({
+            event: "start-matching",
+          })
+        );
       } else {
         match_btn_info.value = "Start Matching";
+        store.state.battle.socket.send(
+          JSON.stringify({
+            event: "stop-matching",
+          })
+        );
       }
     };
 
