@@ -1,5 +1,6 @@
 package com.kob.backend.consumer;
 
+import com.kob.backend.consumer.utils.JwtAuthentication;
 import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,20 @@ public class WebSocketServer {
 
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("token") String token) {
+    public void onOpen(Session session, @PathParam("token") String token) throws IOException {
         // Construct connection
         this.session = session;
-        System.out.println("Connected!");
-        Integer userId = Integer.parseInt(token);
+        Integer userId = JwtAuthentication.getUserId(token);
         this.user = userMapper.selectById(userId);
-        users.put(userId, this);
+
+        if (this.user != null) {
+            users.put(userId, this);
+        } else {
+            this.session.close();
+        }
+
+        System.out.println(users);
+        System.out.println("Connected!");
     }
 
     @OnClose
