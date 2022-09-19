@@ -75,7 +75,7 @@ public class WebSocketServer {
             matchPool.remove(a);
             matchPool.remove(b);
 
-            Game game = new Game(13, 14, 5, a.getId(), b.getId());
+            Game game = new Game(13, 14, 20, a.getId(), b.getId());
             game.createMap();
 
             users.get(a.getId()).game = game;
