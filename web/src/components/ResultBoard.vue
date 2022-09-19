@@ -40,7 +40,6 @@ export default {
     const restart = () => {
       store.commit("updateStatus", "matching");
       store.commit("updateLoser", "none");
-      store.commit("update");
       store.commit("updateOpponent", {
         username: "My Opponent",
         photo:

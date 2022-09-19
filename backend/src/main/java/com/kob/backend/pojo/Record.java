@@ -18,6 +18,7 @@ public class Record {
     private Integer id;
     private Integer aId;
     private Integer aSx;
+    private Integer aSy;
     private Integer bId;
     private Integer bSx;
     private Integer bSy;
