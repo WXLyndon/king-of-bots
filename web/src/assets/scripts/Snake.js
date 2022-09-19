@@ -82,11 +82,6 @@ export class Snake extends GameObject {
     for (let i = k; i > 0; i--) {
       this.cells[i] = JSON.parse(JSON.stringify(this.cells[i - 1]));
     }
-
-    // If the next step is invalid, then the snake will die immediately.
-    if (!this.gamemap.check_valid(this.next_cell)) {
-      this.status = "die";
-    }
   }
 
   update_move() {
