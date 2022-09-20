@@ -3,8 +3,10 @@ package com.kob.backend.consumer;
 import com.alibaba.fastjson.JSONObject;
 import com.kob.backend.consumer.utils.Game;
 import com.kob.backend.consumer.utils.JwtAuthentication;
+import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.mapper.RecordMapper;
 import com.kob.backend.mapper.UserMapper;
+import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,12 +33,18 @@ public class WebSocketServer {
 
     private static UserMapper userMapper;
     private static RecordMapper recordMapper;
+    private static BotMapper botMapper;
 
     private static RestTemplate restTemplate;
 
     private Game game = null;
     private final static String addPlayerUrl = "http://127.0.0.1:3001/player/add/";
     private final static String removePlayerUrl = "http://127.0.0.1:3001/player/remove/";
+
+
+    public static RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
 
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
@@ -50,6 +58,11 @@ public class WebSocketServer {
     @Autowired
     public void setRecordMapper(RecordMapper recordMapper) {
         WebSocketServer.recordMapper = recordMapper;
+    }
+
+    @Autowired
+    public void setBotMapper(BotMapper botMapper) {
+        WebSocketServer.botMapper = botMapper;
     }
 
     @Autowired
@@ -91,7 +104,17 @@ public class WebSocketServer {
         User a = userMapper.selectById(aId);
         User b = userMapper.selectById(bId);
 
-        Game game = new Game(rows, cols, innerWallsCount, a.getId(), b.getId());
+        Bot botA = botMapper.selectById(aBotId);
+        Bot botB = botMapper.selectById(bBotId);
+
+        Game game = new Game(rows,
+                cols,
+                innerWallsCount,
+                a.getId(),
+                botA,
+                b.getId(),
+                botB);
+
         game.createMap();
 
         // To avoid the error if either user's client is closed.
