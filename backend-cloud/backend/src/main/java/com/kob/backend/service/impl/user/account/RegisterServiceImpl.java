@@ -72,7 +72,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         String encodedPassword = passwordEncoder.encode(password);
         String photo = "https://cdn.acwing.com/media/user/profile/photo/158529_lg_b724192485.jpg";
-        User user = new User(null, username, encodedPassword, photo);
+        User user = new User(null, username, encodedPassword, photo, 1500);
         userMapper.insert(user);
 
 
