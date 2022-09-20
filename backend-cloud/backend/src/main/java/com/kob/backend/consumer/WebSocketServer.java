@@ -87,7 +87,7 @@ public class WebSocketServer {
         }
     }
 
-    public static void startGame(Integer aId, Integer bId){
+    public static void startGame(Integer aId, Integer aBotId, Integer bId, Integer bBotId){
         User a = userMapper.selectById(aId);
         User b = userMapper.selectById(bId);
 
@@ -141,11 +141,12 @@ public class WebSocketServer {
 
     }
 
-    private void startMatching() {
+    private void startMatching(Integer botId) {
         System.out.println("Start Matching!");
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", this.user.getId().toString());
         data.add("rating", this.user.getRating().toString());
+        data.add("bot_id", botId.toString());
         restTemplate.postForObject(addPlayerUrl, data, String.class);
 
     }
@@ -173,7 +174,7 @@ public class WebSocketServer {
         String event = data.getString("event");
 
         if ("start-matching".equals(event)) {
-            startMatching();
+            startMatching(data.getInteger("bot_id"));
         } else if ("stop-matching".equals(event)) {
             stopMatching();
         } else if ("move".equals(event)) {

@@ -11,7 +11,11 @@
       </div>
       <div class="col-4">
         <div class="user-select-bot">
-          <select class="form-select" aria-label="Default select example">
+          <select
+            v-model="selected_bot"
+            class="form-select"
+            aria-label="Default select example"
+          >
             <option value="-1" selected>Play In Person</option>
             <option v-for="bot in bots" :key="bot.id" :value="bot.id">
               {{ bot.nickname }}
@@ -50,6 +54,7 @@ export default {
     const store = useStore();
     let match_btn_info = ref("Start Matching");
     let bots = ref([]);
+    let selected_bot = ref("-1");
 
     const refresh_bots = () => {
       $.ajax({
@@ -70,6 +75,7 @@ export default {
         store.state.battle.socket.send(
           JSON.stringify({
             event: "start-matching",
+            bot_id: selected_bot.value,
           })
         );
       } else {
@@ -88,6 +94,7 @@ export default {
       match_btn_info,
       click_match_btn,
       bots,
+      selected_bot,
     };
   },
 };
