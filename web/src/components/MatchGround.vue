@@ -1,7 +1,7 @@
 <template>
   <div class="matchground">
     <div class="row">
-      <div class="col-6">
+      <div class="col-4">
         <div class="user-photo">
           <img :src="$store.state.user.photo" alt="" />
         </div>
@@ -9,7 +9,17 @@
           {{ $store.state.user.username }}
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-4">
+        <div class="user-select-bot">
+          <select class="form-select" aria-label="Default select example">
+            <option value="-1" selected>Play In Person</option>
+            <option v-for="bot in bots" :key="bot.id" :value="bot.id">
+              {{ bot.nickname }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-4">
         <div class="user-photo">
           <img :src="$store.state.battle.opponent_photo" alt="" />
         </div>
@@ -33,11 +43,26 @@
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import $ from "jquery";
 
 export default {
   setup() {
     const store = useStore();
     let match_btn_info = ref("Start Matching");
+    let bots = ref([]);
+
+    const refresh_bots = () => {
+      $.ajax({
+        url: "http://127.0.0.1:3000/user/bot/getlist/",
+        type: "GET",
+        headers: {
+          Authorization: "Bearer " + store.state.user.token,
+        },
+        success: (resp) => {
+          bots.value = resp;
+        },
+      });
+    };
 
     const click_match_btn = () => {
       if (match_btn_info.value === "Start Matching") {
@@ -57,9 +82,12 @@ export default {
       }
     };
 
+    refresh_bots(); // Dynamically get the list of the bots from the server.
+
     return {
       match_btn_info,
       click_match_btn,
+      bots,
     };
   },
 };
@@ -89,5 +117,14 @@ div.user-username {
   font-weight: 600;
   color: white;
   padding-top: 2vh;
+}
+
+div.user-select-bot {
+  padding-top: 20vh;
+}
+
+div.user-select-bot > select {
+  width: 60%;
+  margin: 0 auto;
 }
 </style>
