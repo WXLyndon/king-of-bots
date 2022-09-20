@@ -183,9 +183,14 @@ public class WebSocketServer {
 
     private void move(int direction) {
         if (game.getPlayerA().getId().equals(user.getId())){
-            game.setNextStepA(direction);
+            if (game.getPlayerA().getBotId().equals(-1)) { // Only accepts frontend input when player plays in person
+                game.setNextStepA(direction);
+            }
         } else if (game.getPlayerB().getId().equals(user.getId())) {
-            game.setNextStepB(direction);
+            if (game.getPlayerB().getBotId().equals(-1)) { // Only accepts frontend input when player plays in person
+                game.setNextStepB(direction);
+            }
+
         }
     }
 
