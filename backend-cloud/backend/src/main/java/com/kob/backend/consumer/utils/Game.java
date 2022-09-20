@@ -217,8 +217,15 @@ public class Game extends Thread {
 
     // Send message to two clients.
     public void sendAllMessage(String message) {
-        WebSocketServer.getUsers().get(playerA.getId()).sendMessage(message);
-        WebSocketServer.getUsers().get(playerB.getId()).sendMessage(message);
+
+        if ( WebSocketServer.getUsers().get(playerA.getId()) != null) {
+            WebSocketServer.getUsers().get(playerA.getId()).sendMessage(message);
+        }
+
+        if (WebSocketServer.getUsers().get(playerB.getId()) != null) {
+            WebSocketServer.getUsers().get(playerB.getId()).sendMessage(message);
+        }
+
     }
 
     // Send the next moves of both snakes to two clients.

@@ -94,8 +94,14 @@ public class WebSocketServer {
         Game game = new Game(rows, cols, innerWallsCount, a.getId(), b.getId());
         game.createMap();
 
-        users.get(a.getId()).game = game;
-        users.get(b.getId()).game = game;
+        // To avoid the error if either user's client is closed.
+        if (users.get(a.getId()) != null) {
+            users.get(a.getId()).game = game;
+        }
+
+        if (users.get(b.getId()) != null) {
+            users.get(b.getId()).game = game;
+        }
 
         game.start(); // Start a new game thread
 
@@ -115,14 +121,23 @@ public class WebSocketServer {
         respA.put("opponent_username", b.getUsername());
         respA.put("opponent_photo", b.getPhoto());
         respA.put("game", respGame);
-        users.get(a.getId()).sendMessage(respA.toJSONString());
+
+        // To avoid the error if either user's client is closed.
+        if (users.get(a.getId()) != null) {
+            users.get(a.getId()).sendMessage(respA.toJSONString());
+        }
 
         JSONObject respB = new JSONObject();
         respB.put("event", "start-matching");
         respB.put("opponent_username", a.getUsername());
         respB.put("opponent_photo", a.getPhoto());
         respB.put("game", respGame);
-        users.get(b.getId()).sendMessage(respB.toJSONString());
+
+        // To avoid the error if either user's client is closed.
+        if (users.get(b.getId()) != null) {
+            users.get(b.getId()).sendMessage(respB.toJSONString());
+        }
+
 
     }
 
