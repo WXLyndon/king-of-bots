@@ -22,7 +22,7 @@ public class Game extends Thread {
     private final Player playerA, playerB;
     private Integer nextStepA = null;
     private Integer nextStepB = null;
-    private ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
     private String status = "playing"; // playing -> finished
     private String loser = ""; // "all": tie; "A": A loses; "B": B loses.
 
