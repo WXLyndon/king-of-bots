@@ -45,7 +45,13 @@
             <scope>provided</scope>
         </dependency>
 
-        
+        <!-- https://mvnrepository.com/artifact/org.jooq/joor-java-8 -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>joor-java-8</artifactId>
+            <version>0.9.14</version>
+        </dependency>
+
 
     </dependencies>
 
