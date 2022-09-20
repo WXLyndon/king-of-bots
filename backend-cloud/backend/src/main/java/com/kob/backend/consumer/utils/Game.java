@@ -165,8 +165,25 @@ public class Game extends Thread {
         }
     }
 
+    // Encode current game info into String.
     private String getGameInfo(Player player) {
+        Player me, you;
 
+        if (playerA.getId().equals(player.getId())){
+            me = playerA;
+            you = playerB;
+        } else {
+            me = playerB;
+            you = playerA;
+        }
+
+        return getMapString() + "#" +
+                me.getSx() + "#" +
+                me.getSy() + "#(" +
+                me.getStepsString() + ")#" +
+                you.getSx() + "#" +
+                you.getSy() + "#(" +
+                you.getStepsString() + ")";
     }
 
     private void sendBotCode(Player player) {
