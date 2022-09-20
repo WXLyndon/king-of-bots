@@ -8,14 +8,15 @@ import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
 @ServerEndpoint("/websocket/{token}")  // Do not end with '/'
@@ -30,7 +31,12 @@ public class WebSocketServer {
 
     private static UserMapper userMapper;
     private static RecordMapper recordMapper;
+
+    private static RestTemplate restTemplate;
+
     private Game game = null;
+    private final static String addPlayerUrl = "http://127.0.0.1:3001/player/add/";
+    private final static String removePlayerUrl = "http://127.0.0.1:3001/player/remove/";
 
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
@@ -44,6 +50,11 @@ public class WebSocketServer {
     @Autowired
     public void setRecordMapper(RecordMapper recordMapper) {
         WebSocketServer.recordMapper = recordMapper;
+    }
+
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate){
+        WebSocketServer.restTemplate = restTemplate;
     }
 
     public static ConcurrentHashMap<Integer, WebSocketServer> getUsers() {
@@ -117,12 +128,18 @@ public class WebSocketServer {
 
     private void startMatching() {
         System.out.println("Start Matching!");
-
+        MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
+        data.add("user_id", this.user.getId().toString());
+        data.add("rating", this.user.getRating().toString());
+        restTemplate.postForObject(addPlayerUrl, data, String.class);
 
     }
 
     private void stopMatching() {
         System.out.println("Stop Matching!");
+        MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
+        data.add("user_id", this.user.getId().toString());
+        restTemplate.postForObject(removePlayerUrl, data, String.class);
     }
 
     private void move(int direction) {
