@@ -87,7 +87,7 @@ public class WebSocketServer {
         }
     }
 
-    private void startGame(Integer aId, Integer bId){
+    public static void startGame(Integer aId, Integer bId){
         User a = userMapper.selectById(aId);
         User b = userMapper.selectById(bId);
 
