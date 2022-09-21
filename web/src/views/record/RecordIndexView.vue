@@ -1,6 +1,6 @@
 <template>
   <ContentField>
-    <table class="table table-hover">
+    <table class="table table-hover" style="text-align: center">
       <thead>
         <tr>
           <th>Player A</th>
@@ -26,7 +26,11 @@
           <td>{{ record.result }}</td>
           <td>{{ record.record.createTime }}</td>
           <td>
-            <button type="button" class="btn btn-secondary">
+            <button
+              type="button"
+              @click="open_record_content(record.record.id)"
+              class="btn btn-secondary"
+            >
               Watch Recording
             </button>
           </td>
@@ -41,6 +45,7 @@ import ContentField from "@/components/ContentField.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import $ from "jquery";
+import router from "../../router/index";
 
 export default {
   components: {
@@ -75,7 +80,54 @@ export default {
 
     pull_page(current_page);
     console.log(total_records);
-    return { records };
+
+    const stringTo2d = (map) => {
+      let gamemap = [];
+      for (let i = 0, k = 0; i < 13; i++) {
+        let line = [];
+        for (let j = 0; j < 14; j++, k++) {
+          if (map[k] === "0") {
+            line.push(0);
+          } else {
+            line.push(1);
+          }
+        }
+        gamemap.push(line);
+      }
+      return gamemap;
+    };
+
+    const open_record_content = (recordId) => {
+      for (const record of records.value) {
+        if (record.record.id == recordId) {
+          store.commit("updateIsRecord", true);
+          store.commit("updateGame", {
+            map: stringTo2d(record.record.map),
+            a_id: record.record.aid,
+            a_sx: record.record.asx,
+            a_sy: record.record.asy,
+            b_id: record.record.bid,
+            b_sx: record.record.bsx,
+            b_sy: record.record.bsy,
+          });
+
+          store.commit("updateSteps", {
+            a_steps: record.record.asteps,
+            b_steps: record.record.bsteps,
+          });
+
+          store.commit("updateRecordLoser", record.record.loser);
+
+          router.push({
+            name: "record_content",
+            params: { recordId },
+          });
+          break;
+        }
+      }
+    };
+
+    return { records, open_record_content };
   },
 };
 </script>
