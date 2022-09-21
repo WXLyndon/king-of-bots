@@ -1,6 +1,6 @@
 <template>
   <ContentField>
-    <table class="table table-hover" style="text-align: center">
+    <table class="table table-striped table-hover" style="text-align: center">
       <thead>
         <tr>
           <th>Player A</th>
