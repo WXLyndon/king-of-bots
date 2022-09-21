@@ -15,6 +15,7 @@ public class BotPool extends Thread {
 
         try{
             bots.add(new Bot(userId, botCode, gameInfo));
+            condition.signalAll(); // A new bot added to bots, thread should wake up.
         }
         finally {
             lock.unlock();
@@ -22,6 +23,8 @@ public class BotPool extends Thread {
     }
 
     private void consume(Bot bot) {
+        Consumer consumer = new Consumer();
+        consumer.startTimeout(2000, bot);
 
     }
 

@@ -46,6 +46,10 @@ public class WebSocketServer {
         return restTemplate;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         WebSocketServer.userMapper = userMapper;
@@ -190,7 +194,6 @@ public class WebSocketServer {
             if (game.getPlayerB().getBotId().equals(-1)) { // Only accepts frontend input when player plays in person
                 game.setNextStepB(direction);
             }
-
         }
     }
 
