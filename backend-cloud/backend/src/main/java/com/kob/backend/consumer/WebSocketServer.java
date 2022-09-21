@@ -50,6 +50,10 @@ public class WebSocketServer {
         return game;
     }
 
+    public static UserMapper getUserMapper() {
+        return WebSocketServer.userMapper;
+    }
+
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         WebSocketServer.userMapper = userMapper;
