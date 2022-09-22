@@ -167,6 +167,15 @@ export default {
 
           store.commit("updateRecordLoser", record.record.loser);
 
+          store.commit("updatePlayerInfo", {
+            a_photo: record.a_photo,
+            a_username: record.a_username,
+            b_photo: record.b_photo,
+            b_username: record.b_username,
+          });
+
+          console.log(store.state.record.a_name, store.state.record.b_name);
+
           router.push({
             name: "record_content",
             params: { recordId },
