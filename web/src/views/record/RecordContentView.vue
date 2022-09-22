@@ -13,7 +13,7 @@ export default {
   setup() {
     const store = useStore();
 
-    if (store.state.record.a_steps === "") {
+    if (store.state.record.record_loser === "") {
       router.replace({ name: "record_index" });
     }
   },
