@@ -82,7 +82,7 @@ div.playground {
 div.playground-username {
   margin-top: 2vh;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: bold;
   text-align: center;
 }
 </style>
