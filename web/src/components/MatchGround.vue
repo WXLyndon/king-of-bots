@@ -58,7 +58,8 @@ export default {
 
     const refresh_bots = () => {
       $.ajax({
-        url: "http://127.0.0.1:3000/user/bot/getlist/",
+        // url: "http://127.0.0.1:3000/api/user/bot/getlist/",
+        url: "https://kob.xuanlinwang.com/api/user/bot/getlist/",
         type: "GET",
         headers: {
           Authorization: "Bearer " + store.state.user.token,

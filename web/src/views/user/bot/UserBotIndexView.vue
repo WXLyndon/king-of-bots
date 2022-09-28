@@ -274,7 +274,8 @@ export default {
 
     const refresh_bots = () => {
       $.ajax({
-        url: "http://127.0.0.1:3000/user/bot/getlist/",
+        // url: "http://127.0.0.1:3000/api/user/bot/getlist/",
+        url: "https://kob.xuanlinwang.com/api/user/bot/getlist/",
         type: "GET",
         headers: {
           Authorization: "Bearer " + store.state.user.token,
@@ -290,7 +291,9 @@ export default {
     const add_bot = () => {
       new_bot.error_message = "";
       $.ajax({
-        url: "http://127.0.0.1:3000/user/bot/add/",
+        // url: "http://127.0.0.1:3000/api/user/bot/add/",
+        url: "https://kob.xuanlinwang.com/api/user/bot/add/",
+
         type: "POST",
         headers: {
           Authorization: "Bearer " + store.state.user.token,
@@ -320,7 +323,8 @@ export default {
     const update_bot = (bot) => {
       new_bot.error_message = "";
       $.ajax({
-        url: "http://127.0.0.1:3000/user/bot/update/",
+        // url: "http://127.0.0.1:3000/api/user/bot/update/",
+        url: "https://kob.xuanlinwang.com/api/user/bot/update/",
         type: "POST",
         headers: {
           Authorization: "Bearer " + store.state.user.token,
@@ -347,7 +351,8 @@ export default {
 
     const remove_bot = (bot) => {
       $.ajax({
-        url: "http://127.0.0.1:3000/user/bot/remove/",
+        // url: "http://127.0.0.1:3000/api/user/bot/remove/",
+        url: "https://kob.xuanlinwang.com/api/user/bot/remove/",
         type: "POST",
         headers: {
           Authorization: "Bearer " + store.state.user.token,
